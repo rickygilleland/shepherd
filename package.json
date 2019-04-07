@@ -11,7 +11,11 @@
     "plist": "^3.0.1",
     "react": "16.8.3",
     "react-native": "0.59.3",
+    "react-native-elements": "^1.1.0",
     "react-native-fbsdk": "0.8.0",
+    "react-native-gesture-handler": "^1.1.0",
+    "react-native-vector-icons": "^6.4.2",
+    "react-navigation": "^3.6.1",
     "xcode": "^2.0.0"
   },
   "devDependencies": {
