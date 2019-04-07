@@ -12,13 +12,15 @@ import {
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 
 class HomeScreen extends React.Component {
+	
   static navigationOptions = {
-    title: 'Welcome to the app!',
+    title: 'Local',
   };
+  
 
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <Button title="Actually, sign me out :)" onPress={this._signOutAsync} />
       </View>
     );

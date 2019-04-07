@@ -31,7 +31,7 @@ class SignInScreen extends React.Component {
                 AccessToken.getCurrentAccessToken().then(
                   (data) => {
 	                  
-	            	fetch('https://shepherd-app-backend-api.herokuapp.com/api/token', {
+	            	return fetch('https://shepherd-app-backend-api.herokuapp.com/api/token', {
 					      method: 'POST',
 					      headers: {
 					        'Content-Type': 'application/json',
@@ -43,7 +43,14 @@ class SignInScreen extends React.Component {
 					    
 					.then((response) => response.json())
 					    .then((responseJson) => {
-							alert(responseJson.token);
+						    
+						    _signInAsync = async () => {
+							    await AsyncStorage.setItem('backend_token', responseJson.token);
+							    this.props.navigation.navigate('App');
+							};
+							
+							_signInAsync();
+				  
 					    })
 					    .catch((error) => {
 					      	console.error(error);
@@ -53,15 +60,16 @@ class SignInScreen extends React.Component {
                   }
             }
           }
-          onLogoutFinished={() => console.log("logout.")}/>
+          onLogoutFinished={() => this._signOutAsync }/>
       </View>
     );
   }
-
-  _signInAsync = async () => {
-    await AsyncStorage.setItem('userToken', data.accessToken.toString());
-    this.props.navigation.navigate('App');
+  
+  _signOutAsync = async () => {
+    await AsyncStorage.clear();
+    this.props.navigation.navigate('Auth');
   };
+ 
 }
 
 export default SignInScreen;

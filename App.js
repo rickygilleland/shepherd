@@ -17,10 +17,11 @@ import {
   View,
 } from 'react-native';
 
-import { createStackNavigator, createSwitchNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator, createSwitchNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation';
 
 import HomeScreen from './screens/Home';
 import SignInScreen from './screens/SignIn';
+import ProfileScreen from './screens/Profile';
 
 const styles = StyleSheet.create({
   container: {
@@ -41,16 +42,47 @@ const styles = StyleSheet.create({
   },
 });
 
+class AuthLoadingScreen extends React.Component {
+  constructor() {
+    super();
+    this._bootstrapAsync();
+  }
 
-const AppStack = createStackNavigator({ Home: HomeScreen });
+  // Fetch the token from storage then navigate to our appropriate place
+  _bootstrapAsync = async () => {
+    const backend_token = await AsyncStorage.getItem('backend_token');
+
+    // This will switch to the App screen or Auth screen and this loading
+    // screen will be unmounted and thrown away.
+    this.props.navigation.navigate(backend_token ? 'App' : 'Auth');
+  };
+
+  // Render any loading content that you like here
+  render() {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator />
+        <StatusBar barStyle="default" />
+      </View>
+    );
+  }
+}
+
+
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
+
+const AppStack = createBottomTabNavigator({
+  Home: HomeScreen,
+  Profile: ProfileScreen
+});
 
 export default createAppContainer(createSwitchNavigator(
   {
+    AuthLoading: AuthLoadingScreen,
     App: AppStack,
     Auth: AuthStack,
   },
   {
-    initialRouteName: 'Auth',
+    initialRouteName: 'AuthLoading',
   }
 ));
