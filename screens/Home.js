@@ -417,7 +417,7 @@ class HomeScreen extends React.Component {
 
 
   findCoordinates = () => {
-	  
+
     navigator.geolocation.getCurrentPosition(
       position => {
         const location = JSON.stringify(position);
@@ -426,8 +426,10 @@ class HomeScreen extends React.Component {
         
         this.storeLastLocation();
         
+        this._getPosts();
+        
         //watch the location and report changes
-		navigator.geolocation.watchPosition(
+		watchId = navigator.geolocation.watchPosition(
 		      position => {
 		        const location = JSON.stringify(position);
 		        
@@ -440,6 +442,9 @@ class HomeScreen extends React.Component {
 		      error => this.handleLocationError(),
 		      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 		    );
+		    
+		this.setState({ watchId: watchId });    
+		this.storeWatchId();
         
       },
       error => this.handleLocationError(),
@@ -449,6 +454,10 @@ class HomeScreen extends React.Component {
   
   storeLastLocation = async () => {
 	    await AsyncStorage.setItem('last_location', this.state.location);
+  };
+  
+  storeWatchId = async() => {
+	  await AsyncStorage.setItem('watchId', this.state.watchId.toString());
   };
 
   

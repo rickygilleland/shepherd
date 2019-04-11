@@ -196,8 +196,17 @@ class ProfileScreen extends React.Component {
   }
   
   _signOutAsync = async () => {
-    await AsyncStorage.clear();
-    this.props.navigation.navigate('Auth');
+    
+    var watchId = await AsyncStorage.getItem('watchId');
+    
+    if (watchId != null) {
+	    navigator.geolocation.clearWatch(parseInt(watchId));
+    }
+    
+	navigator.geolocation.stopObserving();
+	
+	await AsyncStorage.clear();
+	this.props.navigation.navigate('Auth');
   };
   
   _getProfileInfo = async () => {
