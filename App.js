@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
 
 import {
@@ -34,6 +26,11 @@ import LocationDeniedScreen from './screens/LocationDenied';
 import ReportCommentScreen from './screens/ReportComment';
 import DeleteCommentScreen from './screens/DeleteComment';
 import TokenErrorScreen from './screens/TokenError';
+
+import { Sentry } from 'react-native-sentry';
+
+Sentry.config('https://6eb053cc2f9249448eadad39862b03dd@sentry.io/1437098').install();
+
 
 const styles = StyleSheet.create({
   container: {

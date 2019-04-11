@@ -10,7 +10,7 @@ import {
   RefreshControl,
 } from 'react-native';
 
-import { Avatar, Text, Card, ListItem, Button, Icon, Divider, Header, ButtonGroup, Tooltip, Overlay } from 'react-native-elements';
+import { Avatar, Text, Card, ListItem, Button, Icon, Divider, Header, ButtonGroup, Tooltip, Overlay, Image } from 'react-native-elements';
 
 class HomeScreen extends React.Component {
 	
@@ -127,7 +127,7 @@ class HomeScreen extends React.Component {
 				  {
 				    this.state.posts.map((p, i) => {
 				      return (
-				        <Card>
+				        <Card key={i} containerStyle={styles.noMargin}>
 				        	<View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-evenly'}}>
 				        		<View style={{ flex: 2, flexDirection: 'row', justifyContent: 'flex-start'}}>
 					        		<View>
@@ -194,8 +194,7 @@ class HomeScreen extends React.Component {
 				        							        		
 				        		</View>
 
-				        	</View>
-				        	
+				        	</View>				        	
 				    		<Text style={styles.contentText}>{p.content}</Text>
 				    		
 				    		<View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-evenly'}}>
@@ -576,6 +575,12 @@ const styles = StyleSheet.create({
 		fontFamily: 'Airbnb Cereal App',
 		fontWeight: 'bold',
 		marginTop: 10,
+	},
+	noMargin: {
+		marginLeft: 0, 
+		marginRight: 0,
+		marginBottom: 0,
+		marginTop: 0,
 	},
 });
 export default HomeScreen;

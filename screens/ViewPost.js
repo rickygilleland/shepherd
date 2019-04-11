@@ -225,7 +225,7 @@ class ViewPostScreen extends React.Component {
 			    	<ScrollView style={{ flex: 1}}>
 
 				    
-				    	<Card>
+				    	<Card containerStyle={styles.noMargin}>
 							<View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-evenly'}}>
 								<View style={{ flex: 2, flexDirection: 'row', justifyContent: 'flex-start'}}>
 						    		<View>
@@ -435,8 +435,8 @@ class ViewPostScreen extends React.Component {
 						
 						</Card>
 						
-						<View style={{ flex: 1, flexDirection: 'row', paddingLeft: 20, paddingRight: 20, paddingTop: 8}}>
-				        	<View style={{ flex: 2, paddingRight: 6}}>
+						<View style={{ flex: 1, flexDirection: 'row', paddingLeft: 4, paddingRight: 4, paddingTop: 8}}>
+				        	<View style={{ flex: 2, paddingRight: 2}}>
 					        	<Input
 								  placeholder='Comment on this post.'
 								  onChangeText={(text) => this.setState({text})}
@@ -464,14 +464,14 @@ class ViewPostScreen extends React.Component {
 						</View>
 
 					
-						<Text style={{ fontFamily: 'Airbnb Cereal App', marginLeft: 20, marginTop: 10, fontWeight: 'bold', fontSize: 16}}>Comments</Text>
+						<Text style={{ fontFamily: 'Airbnb Cereal App', marginLeft: 10, marginTop: 10, marginBottom: 10, fontWeight: 'bold', fontSize: 16}}>Comments</Text>
 		
 						
 						 {
 							//comments
 						    this.state.comments.map((p, i) => {
 						      return (
-						        <Card>
+						        <Card key={i} containerStyle={styles.noMargin}>
 						        	<View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-evenly'}}>
 										<View style={{ flex: 2, flexDirection: 'row', justifyContent: 'flex-start'}}>
 								    		<View>
@@ -665,6 +665,12 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 		marginLeft: 20,
 		marginRight: 20,
+	},
+	noMargin: {
+	    marginLeft: 0, 
+		marginRight: 0,
+		marginBottom: 0,
+		marginTop: 0,
 	}
 });
 export default ViewPostScreen;
