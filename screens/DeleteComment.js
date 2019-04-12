@@ -2,12 +2,13 @@ import React from 'react';
 
 import {
   ActivityIndicator,
-  AsyncStorage,
   StatusBar,
   StyleSheet,
   View,
   Keyboard,
 } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { Avatar, Text, Input, Button, Header, Icon } from 'react-native-elements';
 

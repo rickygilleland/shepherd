@@ -2,12 +2,13 @@ import React, {Component} from 'react';
 
 import {
   ActivityIndicator,
-  AsyncStorage,
   Button,
   StatusBar,
   StyleSheet,
   View,
 } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { createStackNavigator, createSwitchNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation';
 
@@ -26,6 +27,7 @@ import LocationDeniedScreen from './screens/LocationDenied';
 import ReportCommentScreen from './screens/ReportComment';
 import DeleteCommentScreen from './screens/DeleteComment';
 import TokenErrorScreen from './screens/TokenError';
+import ErrorLoadingScreen from './screens/ErrorLoading';
 
 import { Sentry } from 'react-native-sentry';
 
@@ -155,6 +157,7 @@ export default createAppContainer(createSwitchNavigator(
     Auth: AuthStack,
     Location: LocationStack,
     TokenError: TokenErrorScreen,
+    ErrorLoading: ErrorLoadingScreen,
   },
   {
     initialRouteName: 'AuthLoading',

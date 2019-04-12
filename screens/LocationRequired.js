@@ -2,13 +2,14 @@ import React from 'react';
 
 import {
   ActivityIndicator,
-  AsyncStorage,
   StatusBar,
   StyleSheet,
   View,
   ScrollView,
   RefreshControl,
 } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { Avatar, Text, Card, ListItem, Button, Icon, Divider, Header, ButtonGroup, Tooltip, Overlay } from 'react-native-elements';
 
