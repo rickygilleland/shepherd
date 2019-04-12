@@ -109,7 +109,7 @@ class SignInScreen extends React.Component {
 		          	  type="outline"
 			          title="View our Privacy Policy"
 			          containerStyle={{ paddingLeft: 20, paddingRight: 20, paddingTop: 30}}
-			          onPress={() => Linking.openURL("https://api.getshepherd.app/privacy")}
+			          onPress={() => Linking.openURL("https://getshepherd.app/privacy")}
 			          titleStyle={{ color: '#FFFFFF' }}
 			          buttonStyle={{ borderColor: '#FFFFFF' }}
 			        />
@@ -118,7 +118,7 @@ class SignInScreen extends React.Component {
 			          type="outline"
 			          title="View our Terms of Service"
 			          containerStyle={{ paddingLeft: 20, paddingRight: 20, paddingTop: 10}}
-			          onPress={() => Linking.openURL("https://api.getshepherd.app/terms")}
+			          onPress={() => Linking.openURL("https://getshepherd.app/terms")}
 			          titleStyle={{ color: '#FFFFFF' }}
 			          buttonStyle={{borderColor: '#FFFFFF'}}
 			        />
