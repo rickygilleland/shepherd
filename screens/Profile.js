@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   ActivityIndicator,
-  AsyncStorage,
   Button,
   StatusBar,
   StyleSheet,
@@ -10,6 +9,8 @@ import {
   ScrollView,
   RefreshControl,
 } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { Avatar, Text, Header, Card } from 'react-native-elements';
 
@@ -167,7 +168,7 @@ class ProfileScreen extends React.Component {
 						  
 							    })
 							    .catch((error) => {
-							      	console.error(error);
+							      	return this.props.navigation.navigate('ErrorLoading');
 							    });
 							});
 		
@@ -242,7 +243,7 @@ class ProfileScreen extends React.Component {
 	  
 		    })
 		    .catch((error) => {
-		      	console.error(error);
+		      	return this.props.navigation.navigate('ErrorLoading');
 		    });
 	};
 }

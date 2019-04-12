@@ -15,7 +15,7 @@ import { Avatar, Text, Card, ListItem, Button, Icon, Divider, Header, ButtonGrou
 
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 
-class TokenErrorScreen extends React.Component {
+class ErrorLoadingScreen extends React.Component {
 	
   static navigationOptions = {
     title: 'Loading Error',
@@ -29,9 +29,9 @@ class TokenErrorScreen extends React.Component {
 	  return (
 		  <ScrollView style={{ paddingTop: 50 }}>
 		  	<Text h4 style={{ fontFamily: 'Airbnb Cereal App', textAlign: 'center'}}>Oops! There was an issue.</Text>
-		  	<Text style={{ fontFamily: 'Airbnb Cereal App', padding: 20, textAlign: 'center'}}>We had trouble authorizing your request with our server. This generally happens if you are running the app on more than one device at the same time.</Text>
+		  	<Text style={{ fontFamily: 'Airbnb Cereal App', padding: 20, textAlign: 'center'}}>We had trouble loading your request. Verify your network connection is working properly and then try restarting the app.</Text>
 		  	
-		  	<Text style={{ fontFamily: 'Airbnb Cereal App', padding: 20, textAlign: 'center'}}> Shepherd can only be used on a single device at a time. Click the button below to log out and re-authorize the app.</Text>
+		  	<Text style={{ fontFamily: 'Airbnb Cereal App', padding: 20, textAlign: 'center'}}>If your network connection is working fine, you can try logging out with the button below and trying again.</Text>
 		  	
 		  	<View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 80}}>
 
@@ -69,7 +69,7 @@ class TokenErrorScreen extends React.Component {
 						  
 							    })
 							    .catch((error) => {
-							      	console.error(error);
+							      	alert('There was an error loading your request! Check your network connection.')
 							    });
 							});
 		
@@ -102,4 +102,4 @@ class TokenErrorScreen extends React.Component {
 
 
 
-export default TokenErrorScreen;
+export default ErrorLoadingScreen;

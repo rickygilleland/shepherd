@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   ActivityIndicator,
-  AsyncStorage,
   StatusBar,
   StyleSheet,
   View,
@@ -14,6 +13,8 @@ import { createStackNavigator, createSwitchNavigator, createAppContainer } from 
 import { Text, Header, Button } from 'react-native-elements';
 
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -50,7 +51,7 @@ class SignInScreen extends React.Component {
 		          onLoginFinished={
 		            (error, result) => {
 		              if (error) {
-		                alwer("login has error: " + result.error);
+		                alert("login has error: " + result.error);
 		              } else if (result.isCancelled) {
 		                alert("Oh no! Please login to continue!");
 		              } else {
@@ -76,16 +77,22 @@ class SignInScreen extends React.Component {
 							.then((response) => response.json())
 							    .then((responseJson) => {
 								    
+								    if (typeof responseJson.message !== 'undefined') {
+										if (responseJson.message == 'Unauthenticated.') {
+											return this.props.navigation.navigate('TokenError');
+										}
+									}
+													    
 								    _signInAsync = async () => {
 									    await AsyncStorage.setItem('backend_token', responseJson.token);
-									    this.props.navigation.navigate('App');
+									    return this.props.navigation.navigate('App');
 									};
 									
 									_signInAsync();
 						  
 							    })
 							    .catch((error) => {
-							      	console.error(error);
+							      	return this.props.navigation.navigate('ErrorLoading');
 							    });
 							});
 		
@@ -102,7 +109,7 @@ class SignInScreen extends React.Component {
 		          	  type="outline"
 			          title="View our Privacy Policy"
 			          containerStyle={{ paddingLeft: 20, paddingRight: 20, paddingTop: 30}}
-			          onPress={() => Linking.openURL("https://api.getshepherd.app/privacy")}
+			          onPress={() => Linking.openURL("https://getshepherd.app/privacy")}
 			          titleStyle={{ color: '#FFFFFF' }}
 			          buttonStyle={{ borderColor: '#FFFFFF' }}
 			        />
@@ -111,7 +118,7 @@ class SignInScreen extends React.Component {
 			          type="outline"
 			          title="View our Terms of Service"
 			          containerStyle={{ paddingLeft: 20, paddingRight: 20, paddingTop: 10}}
-			          onPress={() => Linking.openURL("https://api.getshepherd.app/terms")}
+			          onPress={() => Linking.openURL("https://getshepherd.app/terms")}
 			          titleStyle={{ color: '#FFFFFF' }}
 			          buttonStyle={{borderColor: '#FFFFFF'}}
 			        />

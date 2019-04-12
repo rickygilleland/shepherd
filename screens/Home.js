@@ -2,13 +2,16 @@ import React from 'react';
 
 import {
   ActivityIndicator,
-  AsyncStorage,
   StatusBar,
   StyleSheet,
   View,
   ScrollView,
   RefreshControl,
 } from 'react-native';
+
+import NetInfo from "@react-native-community/netinfo";
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 import { Avatar, Text, Card, ListItem, Button, Icon, Divider, Header, ButtonGroup, Tooltip, Overlay, Image } from 'react-native-elements';
 
@@ -506,7 +509,7 @@ class HomeScreen extends React.Component {
 	  
 		    })
 		    .catch((error) => {
-		      	console.error(error);
+		      	return this.props.navigation.navigate('ErrorLoading');
 		    });
 	};
 	
@@ -560,7 +563,7 @@ class HomeScreen extends React.Component {
 	  
 		    })
 		    .catch((error) => {
-		      	console.error(error);
+		      	return this.props.navigation.navigate('ErrorLoading');
 		    });
 	};
 
