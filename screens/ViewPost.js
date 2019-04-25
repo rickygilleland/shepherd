@@ -76,7 +76,7 @@ class ViewPostScreen extends React.Component {
 	  
 	  const backend_token = await AsyncStorage.getItem('backend_token');
 	  
-	  return fetch('https://api.getshepherd.app/api/post/get', {
+	  return fetch('https://api.getshepherd.app/api/1.1.0/post/get', {
 		      method: 'POST',
 		      headers: {
 		        'Content-Type': 'application/json',
@@ -121,7 +121,7 @@ class ViewPostScreen extends React.Component {
 	  
 	  const backend_token = await AsyncStorage.getItem('backend_token');
 	  
-	  return fetch('https://api.getshepherd.app/api/post/comments', {
+	  return fetch('https://api.getshepherd.app/api/1.1.0/post/comments', {
 		      method: 'POST',
 		      headers: {
 		        'Content-Type': 'application/json',
@@ -159,7 +159,7 @@ class ViewPostScreen extends React.Component {
 	  
 	  const backend_token = await AsyncStorage.getItem('backend_token');
 	  
-	  return fetch('https://api.getshepherd.app/api/comment', {
+	  return fetch('https://api.getshepherd.app/api/1.1.0/comment', {
 		      method: 'POST',
 		      headers: {
 		        'Content-Type': 'application/json',
@@ -323,7 +323,7 @@ class ViewPostScreen extends React.Component {
 											      
 											      const backend_token = await AsyncStorage.getItem('backend_token');
 						
-												  return fetch('https://api.getshepherd.app/api/vote', {
+												  return fetch('https://api.getshepherd.app/api/1.1.0/vote', {
 													      method: 'POST',
 													      headers: {
 													        'Content-Type': 'application/json',
@@ -393,7 +393,7 @@ class ViewPostScreen extends React.Component {
 										      
 										      const backend_token = await AsyncStorage.getItem('backend_token');
 										      	  
-											  return fetch('https://api.getshepherd.app/api/vote', {
+											  return fetch('https://api.getshepherd.app/api/1.1.0/vote', {
 												      method: 'POST',
 												      headers: {
 												        'Content-Type': 'application/json',

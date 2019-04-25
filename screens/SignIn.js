@@ -12,9 +12,10 @@ import { createStackNavigator, createSwitchNavigator, createAppContainer } from 
 
 import { Text, Header, Button } from 'react-native-elements';
 
-import { LoginButton, AccessToken } from 'react-native-fbsdk';
-
 import AsyncStorage from '@react-native-community/async-storage';
+
+import Auth0 from 'react-native-auth0';
+const auth0 = new Auth0({ domain: 'shepherdapp.auth0.com', clientId: 'bzwQk9ghwRRDPkfGIxrktBcdeD_nLk2p' });
 
 class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -45,63 +46,33 @@ class SignInScreen extends React.Component {
 	      
 		  	<Text style={styles.contentText}>Click the login button below to continue to your local posts.</Text>
 	      
-		  	<View style={styles.loginButton}>
-		        <LoginButton
-		          readPermissions={["email"]}
-		          onLoginFinished={
-		            (error, result) => {
-		              if (error) {
-		                alert("login has error: " + result.error);
-		              } else if (result.isCancelled) {
-		                alert("Oh no! Please login to continue!");
-		              } else {
-		                AccessToken.getCurrentAccessToken().then(
-			                
-		                  (data) => {
-			                  
-			                this.props.navigation.navigate('SignInLoading');
-			                  
-			                this.setState({ showSpinner: true });
-			                  
-			            	return fetch('https://api.getshepherd.app/api/token', {
-							      method: 'POST',
-							      headers: {
-							        'Content-Type': 'application/json',
-							        'Accept': 'application/json',
-							      },
-							      body: JSON.stringify({
-							          'token': data.accessToken.toString()
-							      })
-							})
-							    
-							.then((response) => response.json())
-							    .then((responseJson) => {
-								    
-								    if (typeof responseJson.message !== 'undefined') {
-										if (responseJson.message == 'Unauthenticated.') {
-											return this.props.navigation.navigate('TokenError');
-										}
-									}
-													    
-								    _signInAsync = async () => {
-									    await AsyncStorage.setItem('backend_token', responseJson.token);
-									    return this.props.navigation.navigate('App');
-									};
-									
-									_signInAsync();
-						  
-							    })
-							    .catch((error) => {
-							      	return this.props.navigation.navigate('ErrorLoading');
-							    });
-							});
-		
-		                  }
-		            }
-		          }
-		          onLogoutFinished={() => this._signOutAsync }/>
+		  	<View>
+		  	
 
-	          
+			                  
+		  	
+		  		<Button 
+		  			type="solid"
+			        containerStyle={{ paddingLeft: 20, paddingRight: 20, paddingTop: 30 }}
+			        titleStyle={{ color: '#FFFFFF' }}
+			        buttonStyle={{ borderColor: '#FFFFFF' }}
+		  			onPress={ () => {
+			  			auth0
+						    .webAuth
+						    .authorize({scope: 'openid profile email', audience: 'https://api.getshepherd.app'})
+						    .then(credentials =>
+						      this._authorizeUser(credentials.accessToken)
+						      // Successfully authenticated
+						      // Store the accessToken
+						    )
+						    .catch(error => console.log(error));
+		  			}}
+		  			
+		  			title="Sign In"
+		  	
+		  		/>
+		  	
+		        	          
 				</View>
 				
 				<Text style={{ fontFamily: 'Airbnb Cereal App', paddingLeft: 20, paddingRight: 20, paddingTop: 50, fontWeight: 'bold', textAlign: 'center', color: '#FFFFFF' }}>By click the Continue with Facebook button above, you agree to the Shepherd App Terms of Service and Privacy Policy.</Text>
@@ -131,10 +102,13 @@ class SignInScreen extends React.Component {
     
   }
   
-  _signOutAsync = async () => {
-    await AsyncStorage.clear();
-    this.props.navigation.navigate('Auth');
-  };
+  
+   _authorizeUser = async (accessToken) => {
+
+	   	await AsyncStorage.setItem('backend_token', accessToken);
+		return this.props.navigation.navigate('App');
+		
+	};
  
 }
 

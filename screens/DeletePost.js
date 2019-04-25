@@ -28,7 +28,7 @@ class DeletePostScreen extends React.Component {
 	  
 	  const backend_token = await AsyncStorage.getItem('backend_token');
 	  
-	  return fetch('https://api.getshepherd.app/api/post/delete', {
+	  return fetch('https://api.getshepherd.app/api/1.1.0/post/delete', {
 		      method: 'POST',
 		      headers: {
 		        'Content-Type': 'application/json',

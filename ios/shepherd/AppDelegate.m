@@ -16,6 +16,7 @@
 #import "RNSentry.h" // This is used for versions of react < 0.40
 #endif
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <React/RCTLinkingManager.h>
 
 @implementation AppDelegate
 
@@ -48,6 +49,13 @@ RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                   ];
   // Add any custom logic here.
   return handled;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+  return [RCTLinkingManager application:application openURL:url
+                      sourceApplication:sourceApplication annotation:annotation];
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge

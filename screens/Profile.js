@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
   ActivityIndicator,
-  Button,
   StatusBar,
   StyleSheet,
   View,
@@ -12,9 +11,7 @@ import {
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { Avatar, Text, Header, Card } from 'react-native-elements';
-
-import { LoginButton, AccessToken } from 'react-native-fbsdk';
+import { Avatar, Text, Header, Card, Button } from 'react-native-elements';
 
 class ProfileScreen extends React.Component {
 	
@@ -127,56 +124,13 @@ class ProfileScreen extends React.Component {
 	        
 	        <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 80}}>
 
-		        <LoginButton
-		          readPermissions={["email"]}
-		          onLoginFinished={
-		            (error, result) => {
-		              if (error) {
-		                console.log("login has error: " + result.error);
-		              } else if (result.isCancelled) {
-		                console.log("login is cancelled.");
-		              } else {
-		                AccessToken.getCurrentAccessToken().then(
-		                  (data) => {
-			                  
-			            	return fetch('https://api.getshepherd.app/api/token', {
-							      method: 'POST',
-							      headers: {
-							        'Content-Type': 'application/json',
-							        'Accept': 'application/json',
-							      },
-							      body: JSON.stringify({
-							          'token': data.accessToken.toString()
-							      })
-							})
-							    
-							.then((response) => response.json())
-							    .then((responseJson) => {
-								    
-									  if (typeof responseJson.message !== 'undefined') {
-											if (responseJson.message == 'Unauthenticated.') {
-												return this.props.navigation.navigate('TokenError');
-											}
-										}
-								    
-								    _signInAsync = async () => {
-									    await AsyncStorage.setItem('backend_token', responseJson.token);
-									    this.props.navigation.navigate('App');
-									};
-									
-									_signInAsync();
-						  
-							    })
-							    .catch((error) => {
-							      	return this.props.navigation.navigate('ErrorLoading');
-							    });
-							});
-		
-		                  }
-		            }
-		          }
-		          onLogoutFinished={() => this._signOutAsync() }/>
-		          
+		        <Button
+		        	onPress={() => this._signOutAsync()}
+		        	buttonStyle={styles.button}
+					titleStyle={{ fontFamily: 'Airbnb Cereal App', color: '#FFFFFF' }}
+		        	title="Log Out"
+		        />
+		        		          
 		    </View>
 
 	      </ScrollView>
@@ -214,7 +168,7 @@ class ProfileScreen extends React.Component {
 	  
 	  const backend_token = await AsyncStorage.getItem('backend_token');
 	  
-	  return fetch('https://api.getshepherd.app/api/user', {
+	  return fetch('https://api.getshepherd.app/api/1.1.0/user', {
 		      method: 'POST',
 		      headers: {
 		        'Content-Type': 'application/json',
@@ -253,5 +207,12 @@ const styles = StyleSheet.create({
 	view: {
 		paddingTop: 40,
 	},
+	button: {
+		marginTop: 20,
+		marginLeft: 20,
+		marginRight: 20,
+		borderColor: '#94009E',
+		backgroundColor: '#94009E',
+	}
 });
 export default ProfileScreen;

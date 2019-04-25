@@ -35,50 +35,8 @@ class ErrorLoadingScreen extends React.Component {
 		  	
 		  	<View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 80}}>
 
-		        <LoginButton
-		          readPermissions={["email"]}
-		          onLoginFinished={
-		            (error, result) => {
-		              if (error) {
-		                console.log("login has error: " + result.error);
-		              } else if (result.isCancelled) {
-		                console.log("login is cancelled.");
-		              } else {
-		                AccessToken.getCurrentAccessToken().then(
-		                  (data) => {
-			                  
-			            	return fetch('https://api.getshepherd.app/api/token', {
-							      method: 'POST',
-							      headers: {
-							        'Content-Type': 'application/json',
-							      },
-							      body: JSON.stringify({
-							          'token': data.accessToken.toString()
-							      })
-							})
-							    
-							.then((response) => response.json())
-							    .then((responseJson) => {
-								    
-								    _signInAsync = async () => {
-									    await AsyncStorage.setItem('backend_token', responseJson.token);
-									    this.props.navigation.navigate('App');
-									};
-									
-									_signInAsync();
-						  
-							    })
-							    .catch((error) => {
-							      	alert('There was an error loading your request! Check your network connection.')
-							    });
-							});
-		
-		                  }
-		            }
-		          }
-		          onLogoutFinished={() => this._signOutAsync() }/>
-		          
-		    </View>
+		       
+		       </View>
 		  </ScrollView>
 	  );
 	  

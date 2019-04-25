@@ -3,6 +3,7 @@ package com.shepherd;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.auth0.react.A0Auth0Package;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.reactnativecommunity.netinfo.NetInfoPackage;
 import io.sentry.RNSentryPackage;
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new A0Auth0Package(),
             new AsyncStoragePackage(),
             new NetInfoPackage(),
             new RNSentryPackage(),
