@@ -39,7 +39,7 @@ class ReportPostScreen extends React.Component {
 	  
 	  const backend_token = await AsyncStorage.getItem('backend_token');
 	  
-	  return fetch('https://api.getshepherd.app/api/post/report', {
+	  return fetch('https://api.getshepherd.app/api/1.1.0/post/report', {
 		      method: 'POST',
 		      headers: {
 		        'Content-Type': 'application/json',

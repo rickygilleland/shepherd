@@ -39,7 +39,7 @@ class ReportCommentScreen extends React.Component {
 	  
 	  const backend_token = await AsyncStorage.getItem('backend_token');
 	  
-	  return fetch('https://api.getshepherd.app/api/comment/report', {
+	  return fetch('https://api.getshepherd.app/api/1.1.0/comment/report', {
 		      method: 'POST',
 		      headers: {
 		        'Content-Type': 'application/json',

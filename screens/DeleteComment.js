@@ -28,7 +28,7 @@ class DeleteCommentScreen extends React.Component {
 	  
 	  const backend_token = await AsyncStorage.getItem('backend_token');
 	  
-	  return fetch('https://api.getshepherd.app/api/comment/delete', {
+	  return fetch('https://api.getshepherd.app/api/1.1.0/comment/delete', {
 		      method: 'POST',
 		      headers: {
 		        'Content-Type': 'application/json',
