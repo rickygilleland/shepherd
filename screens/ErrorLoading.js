@@ -33,7 +33,6 @@ class ErrorLoadingScreen extends React.Component {
 		  	
 		  	<Button
 		        	onPress={() => this._signOutAsync()}
-		        	buttonStyle={styles.button}
 					titleStyle={{ fontFamily: 'Airbnb Cereal App', color: '#FFFFFF' }}
 		        	title="Log Out"
 		        />
