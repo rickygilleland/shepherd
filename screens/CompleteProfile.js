@@ -63,13 +63,12 @@ class CompleteProfileScreen extends React.Component {
 			    if (responseJson.success) {
 				    redirectToPosts = async () => {
 					    await AsyncStorage.setItem('profile_complete', 'true');
-						return this.props.navigation.navigate('App');
 					};
 									
 					redirectToPosts();	
-			    }
-			    
-			    alert('Please complete both fields.');  		    
+					
+					return this.props.navigation.navigate('App');
+			    } 	    
 	  
 		    })
 		    .catch((error) => {

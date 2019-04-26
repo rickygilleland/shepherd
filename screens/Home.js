@@ -24,8 +24,6 @@ class HomeScreen extends React.Component {
   constructor() {
     super();
     
-    const profile_complete = this.checkProfile();
-    
     this.state = {
       postsLoaded: false,
       posts: null,
@@ -38,19 +36,14 @@ class HomeScreen extends React.Component {
       totalVotes: 0,
       profileComplete: false,
     }
-  
-    this.findCoordinates();
-    
-    if (this.state.profile_complete == 'false') {
-		return this.props.navigation.navigate('CompleteProfile');
-	}
- 
+
   }
   
   checkProfile = async() => {
 	  const profile_complete = await AsyncStorage.getItem('profile_complete');
 	  
-	  this.setState({profile_complete: profile_complete});
+	  this.setState({ profile_complete: profile_complete });
+
   };
   
   _onRefresh = () => {
@@ -65,6 +58,9 @@ class HomeScreen extends React.Component {
       //prevent this from firing twice when the screen is first loaded
       if ( this.state.postsLoaded == true ) {
       	this._getPosts();
+	  } else {
+
+		this.findCoordinates();
 	  }
       
     });
@@ -485,6 +481,12 @@ class HomeScreen extends React.Component {
   
   _getPosts = async () => {
 	  
+	  this.checkProfile();
+	  
+		if (this.state.profile_complete == 'false') {
+			return this.props.navigation.navigate('CompleteProfile')
+		}
+	  
 	  this.setState({refreshing: true});
 	  
 	  var last_location = await AsyncStorage.getItem('last_location');
@@ -507,7 +509,7 @@ class HomeScreen extends React.Component {
 		})
 		.then((response) => {
 			if (response.status == 401) {
-				return this.props.navigation.navigate('Auth');
+				throw new Error('unauthenticated');
 			}
 
 		    if(!response.ok) throw new Error(response.status);
@@ -525,6 +527,10 @@ class HomeScreen extends React.Component {
 	  
 		    })
 		    .catch((error) => {
+			    if (error == "Error: unauthenticated") {
+				    return this.props.navigation.navigate('Auth');
+			    }
+			    
 		      	return this.props.navigation.navigate('ErrorLoading');
 		    });
 	};

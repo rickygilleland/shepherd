@@ -143,15 +143,16 @@ class SignInScreen extends React.Component {
 		    
 		.then((response) => response.json())
 		    .then((responseJson) => {
-				
-				if (responseJson.profile_complete == false) {
+
+				if (!responseJson.profile_complete) {
 					
 					redirectToCompleteProfile = async () => {
 					    await AsyncStorage.setItem('profile_complete', 'false');
-						return this.props.navigation.navigate('CompleteProfile');
 					};
 									
 					redirectToCompleteProfile();
+					
+					return this.props.navigation.navigate('CompleteProfile');
 
 				}    
 				
