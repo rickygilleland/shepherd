@@ -15,7 +15,6 @@
     "react-native": "0.59.3",
     "react-native-auth0": "^1.4.1",
     "react-native-elements": "^1.1.0",
-    "react-native-fbsdk": "0.8.0",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-sentry": "^0.42.0",
     "react-native-vector-icons": "^6.4.2",
