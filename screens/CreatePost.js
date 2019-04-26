@@ -75,7 +75,14 @@ class CreatePostScreen extends React.Component {
 		          'location_long': last_location.coords.longitude
 		      })
 		})
-		    
+		.then((response) => {
+			if (response.status == 401) {
+				return this.props.navigation.navigate('Auth');
+			}
+
+		    if(!response.ok) throw new Error(response.status);
+		    else return response;
+		}) 
 		.then((response) => response.json())
 		    .then((responseJson) => {
 			    

@@ -29,7 +29,22 @@ class SignInScreen extends React.Component {
       showSpinner: false,
     }
     
+    this._clearStorage();
+    
   }
+  
+  _clearStorage = async () => {
+    
+    var watchId = await AsyncStorage.getItem('watchId');
+    
+    if (watchId != null) {
+	    navigator.geolocation.clearWatch(parseInt(watchId));
+    }
+    
+	navigator.geolocation.stopObserving();
+	
+	await AsyncStorage.clear();
+  };
 
 
   render() {
@@ -104,8 +119,50 @@ class SignInScreen extends React.Component {
   
   
    _authorizeUser = async (accessToken) => {
+	   
+	   	this.props.navigation.navigate('SignInLoading');
+			                  
+	   	this.setState({ showSpinner: true });
 
 	   	await AsyncStorage.setItem('backend_token', accessToken);
+	   	
+	   	await AsyncStorage.setItem('profile_complete', 'true');
+	   	
+	   	//check if their profile is complete
+	   	return fetch('https://api.getshepherd.app/api/1.1.0/user/profile_complete', {
+		      method: 'POST',
+		      headers: {
+		        'Content-Type': 'application/json',
+		        'Authorization': 'Bearer ' + accessToken,
+		        'Accept': 'application/json',
+		      },
+		      body: JSON.stringify({
+		          'api_token': accessToken
+		      })
+		})
+		    
+		.then((response) => response.json())
+		    .then((responseJson) => {
+				
+				if (responseJson.profile_complete == false) {
+					
+					redirectToCompleteProfile = async () => {
+					    await AsyncStorage.setItem('profile_complete', 'false');
+						return this.props.navigation.navigate('CompleteProfile');
+					};
+									
+					redirectToCompleteProfile();
+
+				}    
+				
+				return this.props.navigation.navigate('App');
+	  
+		    })
+		    .catch((error) => {
+		      	return this.props.navigation.navigate('App');
+		    });
+
+	   	
 		return this.props.navigation.navigate('App');
 		
 	};

@@ -179,15 +179,17 @@ class ProfileScreen extends React.Component {
 		          'api_token': backend_token
 		      })
 		})
+		.then((response) => {
+			if (response.status == 401) {
+				return this.props.navigation.navigate('Auth');
+			}
+
+		    if(!response.ok) throw new Error(response.status);
+		    else return response;
+		})
 		    
 		.then((response) => response.json())
 		    .then((responseJson) => {
-			    
-			    if (typeof responseJson.message !== 'undefined') {
-					if (responseJson.message == 'Unauthenticated.') {
-						return this.props.navigation.navigate('TokenError');
-					}
-				}
 			    
 			    this.setState({
 			        userLoaded: true,
