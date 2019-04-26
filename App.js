@@ -28,6 +28,9 @@ import ReportCommentScreen from './screens/ReportComment';
 import DeleteCommentScreen from './screens/DeleteComment';
 import TokenErrorScreen from './screens/TokenError';
 import ErrorLoadingScreen from './screens/ErrorLoading';
+import CompleteProfileScreen from './screens/CompleteProfile';
+
+import ApiUtils from './ApiUtils';
 
 import { Sentry } from 'react-native-sentry';
 
@@ -158,6 +161,7 @@ export default createAppContainer(createSwitchNavigator(
     Location: LocationStack,
     TokenError: TokenErrorScreen,
     ErrorLoading: ErrorLoadingScreen,
+    CompleteProfile: CompleteProfileScreen,
   },
   {
     initialRouteName: 'AuthLoading',

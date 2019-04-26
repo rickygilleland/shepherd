@@ -24,6 +24,8 @@ class HomeScreen extends React.Component {
   constructor() {
     super();
     
+    const profile_complete = this.checkProfile();
+    
     this.state = {
       postsLoaded: false,
       posts: null,
@@ -34,11 +36,22 @@ class HomeScreen extends React.Component {
       postBeingViewModal: null,
       postedByCurrentUser: false,
       totalVotes: 0,
+      profileComplete: false,
     }
-      
+  
     this.findCoordinates();
+    
+    if (this.state.profile_complete == 'false') {
+		return this.props.navigation.navigate('CompleteProfile');
+	}
  
   }
+  
+  checkProfile = async() => {
+	  const profile_complete = await AsyncStorage.getItem('profile_complete');
+	  
+	  this.setState({profile_complete: profile_complete});
+  };
   
   _onRefresh = () => {
   	this._getPosts();
@@ -238,15 +251,17 @@ class HomeScreen extends React.Component {
 													          'vote_type': 'vote_up'
 													      })
 													})
-													    
+													.then((response) => {
+														if (response.status == 401) {
+															return this.props.navigation.navigate('Auth');
+														}
+											
+													    if(!response.ok) throw new Error(response.status);
+													    else return response;
+													})
+																								    
 													.then((response) => response.json())
 													    .then((responseJson) => {
-														    
-														    if (typeof responseJson.message !== 'undefined') {
-																if (responseJson.message == 'Unauthenticated.') {
-																	return this.props.navigation.navigate('TokenError');
-																}
-															}
 
 														    clonedPosts[i].votes = responseJson.total_votes;
 														    
@@ -308,15 +323,16 @@ class HomeScreen extends React.Component {
 												          'vote_type': 'vote_down'
 												      })
 												})
-												    
+												.then((response) => {
+													if (response.status == 401) {
+														return this.props.navigation.navigate('Auth');
+													}
+										
+												    if(!response.ok) throw new Error(response.status);
+												    else return response;
+												})
 												.then((response) => response.json())
 												    .then((responseJson) => {
-													    
-													    if (typeof responseJson.message !== 'undefined') {
-															if (responseJson.message == 'Unauthenticated.') {
-																return this.props.navigation.navigate('TokenError');
-															}
-														}
 													    
 													    clonedPosts[i].votes = responseJson.total_votes;
 													    
@@ -477,8 +493,6 @@ class HomeScreen extends React.Component {
 	  
 	  const backend_token = await AsyncStorage.getItem('backend_token');
 	  
-	  console.log(backend_token);
-	  
 	  return fetch('https://api.getshepherd.app/api/1.1.0/posts', {
 		      method: 'POST',
 		      headers: {
@@ -491,17 +505,17 @@ class HomeScreen extends React.Component {
 		          'location_long': last_location.coords.longitude
 		      })
 		})
-		    
+		.then((response) => {
+			if (response.status == 401) {
+				return this.props.navigation.navigate('Auth');
+			}
+
+		    if(!response.ok) throw new Error(response.status);
+		    else return response;
+		})
 		.then((response) => response.json())
 		    .then((responseJson) => {
-			    
-			    if (typeof responseJson.message !== 'undefined') {
-				    
-					if (responseJson.message == 'Unauthenticated.') {
-						return this.props.navigation.navigate('TokenError');
-					}
-				}
-			    
+			    			    
 			    this.setState({
 			        postsLoaded: true,
 			        posts: responseJson.posts,
@@ -546,16 +560,17 @@ class HomeScreen extends React.Component {
 		          'sort': sort
 		      })
 		})
-		    
+		.then((response) => {
+			if (response.status == 401) {
+				return this.props.navigation.navigate('Auth');
+			}
+
+		    if(!response.ok) throw new Error(response.status);
+		    else return response;
+		})   
 		.then((response) => response.json())
 		    .then((responseJson) => {
-			    
-			    if (typeof responseJson.message !== 'undefined') {
-					if (responseJson.message == 'Unauthenticated.') {
-						return this.props.navigation.navigate('TokenError');
-					}
-				}
-			    
+
 			    this.setState({
 			        postsLoaded: true,
 			        posts: responseJson.posts,
